@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ace Forward Tennis Academy | Concord & Harrisburg, NC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+        --primary:     #0d3b2e;
+        --secondary:   #1a6b4a;
+        --accent:      #d4ed17;
+        --accent-dark: #a8bc00;
+        --bg:          #f7f8f5;
+        --white:       #ffffff;
+        --dark:        #1a1a1a;
+        --gray:        #6b7280;
+        --light-gray:  #e5e7eb;
+        --shadow:      0 4px 20px rgba(0,0,0,0.08);
+        --shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Open Sans', sans-serif; color: var(--dark); background: var(--bg); line-height: 1.6; }
+    h1,h2,h3,h4,h5 { font-family: 'Montserrat', sans-serif; }
+    a { text-decoration: none; }
+
+    /* UTILITIES */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    .section { padding: 5rem 0; }
+    .section-alt { background: var(--white); }
+    .section-header { text-align: center; margin-bottom: 3rem; }
+    .section-tag { color: var(--secondary); font-size: 0.8rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 0.5rem; display: block; }
+    .section-header h2 { font-size: clamp(1.8rem,4vw,2.6rem); color: var(--primary); font-weight: 800; }
+    .section-header p { color: var(--gray); max-width: 580px; margin: 0.8rem auto 0; }
+
+    /* BUTTONS */
+    .btn { display: inline-block; padding: 0.85rem 1.8rem; border-radius: 30px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.95rem; border: none; cursor: pointer; transition: all 0.25s; text-align: center; }
+    .btn-primary { background: var(--accent); color: var(--primary); }
+    .btn-primary:hover { background: #e2f520; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212,237,23,0.4); color: var(--primary); }
+    .btn-outline-white { background: transparent; color: white; border: 2px solid rgba(255,255,255,0.6); }
+    .btn-outline-white:hover { background: rgba(255,255,255,0.12); border-color: white; color: white; }
+    .btn-dark { background: var(--primary); color: white; }
+    .btn-dark:hover { background: var(--secondary); transform: translateY(-2px); color: white; }
+    .btn-block { width: 100%; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(25px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.show { opacity: 1; transform: none; }
+
+    /* ── NAVIGATION ── */
+    #navbar {
+        position: fixed; top: 0; left: 0; right: 0;
+        background: var(--primary); z-index: 1000;
+        padding: 0 2rem; height: 70px;
+        display: flex; align-items: center; justify-content: space-between;
+        transition: box-shadow 0.3s;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 0.6rem; color: white; }
+    .nav-brand .brand-icon { font-size: 1.7rem; }
+    .nav-brand .brand-name { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1rem; line-height: 1.2; color: white; }
+    .nav-brand .brand-name span { color: var(--accent); }
+    .nav-menu { display: flex; list-style: none; gap: 1.5rem; align-items: center; }
+    .nav-menu a { color: rgba(255,255,255,0.8); font-size: 0.88rem; font-weight: 600; transition: color 0.2s; }
+    .nav-menu a:hover { color: var(--accent); }
+    .nav-menu .nav-cta { background: var(--accent); color: var(--primary); padding: 0.45rem 1.2rem; border-radius: 25px; font-size: 0.85rem; }
+    .nav-menu .nav-cta:hover { background: #e2f520; color: var(--primary); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 5px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: white; border-radius: 2px; transition: all 0.3s; }
+
+    /* ── HERO ── */
+    #hero {
+        min-height: 100vh;
+        background: linear-gradient(150deg, var(--primary) 0%, #1a5c3e 50%, #227a52 100%);
+        display: flex; align-items: center; justify-content: center;
+        text-align: center; padding: 7rem 1.5rem 4rem;
+        position: relative; overflow: hidden;
+    }
+    #hero::before, #hero::after { content: ''; position: absolute; border-radius: 50%; border: 2px solid rgba(212,237,23,0.08); }
+    #hero::before { width: 700px; height: 700px; top: -200px; right: -200px; }
+    #hero::after  { width: 500px; height: 500px; bottom: -150px; left: -150px; }
+    .hero-inner { position: relative; z-index: 1; max-width: 820px; }
+    .hero-badge { display: inline-block; background: rgba(212,237,23,0.15); border: 1px solid rgba(212,237,23,0.5); color: var(--accent); padding: 0.35rem 1rem; border-radius: 25px; font-size: 0.82rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 1.5rem; }
+    #hero h1 { color: white; font-size: clamp(2.8rem,7vw,5rem); font-weight: 800; line-height: 1.05; margin-bottom: 0.5rem; }
+    #hero h1 span { color: var(--accent); }
+    .hero-tagline { color: rgba(255,255,255,0.65); font-size: 0.95rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1.5rem; }
+    #hero > .hero-inner > p { color: rgba(255,255,255,0.82); font-size: 1.1rem; max-width: 600px; margin: 0 auto 2.5rem; }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .hero-stats { display: flex; justify-content: center; gap: 2.5rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.12); flex-wrap: wrap; }
+    .hero-stat .num { font-family: 'Montserrat', sans-serif; font-size: 1.9rem; font-weight: 800; color: var(--accent); }
+    .hero-stat .lbl { font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-top: 0.2rem; }
+
+    /* ── ABOUT ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .about-text h2 { font-size: 2rem; color: var(--primary); font-weight: 800; margin-bottom: 1rem; }
+    .about-text p { color: var(--gray); margin-bottom: 1rem; line-height: 1.75; }
+    .about-checks { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin-top: 1.5rem; }
+    .check-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 600; color: var(--primary); }
+    .check-item i { color: var(--secondary); }
+    .about-visual { background: linear-gradient(140deg, var(--primary), var(--secondary)); border-radius: 20px; padding: 3rem 2rem; text-align: center; color: white; }
+    .about-visual .av-icon { font-size: 4.5rem; margin-bottom: 1rem; }
+    .about-visual h3 { font-size: 1.5rem; margin-bottom: 0.8rem; }
+    .about-visual p { opacity: 0.8; line-height: 1.7; font-size: 0.95rem; }
+    .trial-callout { background: linear-gradient(135deg, var(--accent), #c8e000); border-radius: 16px; padding: 1.8rem 2rem; text-align: center; margin-top: 3rem; }
+    .trial-callout h3 { color: var(--primary); font-size: 1.5rem; font-weight: 800; }
+    .trial-callout p { color: var(--primary); font-weight: 600; margin-top: 0.3rem; opacity: 0.85; }
+
+    /* ── PRICING ── */
+    .pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; align-items: start; }
+    .price-card { background: var(--white); border-radius: 20px; padding: 2.5rem 2rem; text-align: center; box-shadow: var(--shadow); transition: transform 0.3s, box-shadow 0.3s; border: 2px solid transparent; position: relative; }
+    .price-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .price-card.featured { border-color: var(--accent); }
+    .featured-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--accent); color: var(--primary); font-size: 0.75rem; font-weight: 800; padding: 0.25rem 0.9rem; border-radius: 20px; }
+    .price-icon { font-size: 2.8rem; margin-bottom: 1rem; }
+    .price-card h3 { color: var(--primary); font-size: 1.25rem; font-weight: 700; }
+    .price-size { color: var(--gray); font-size: 0.85rem; margin: 0.3rem 0 1.2rem; }
+    .price-amount { font-family: 'Montserrat', sans-serif; font-size: 3rem; font-weight: 800; color: var(--primary); line-height: 1; }
+    .price-amount sub { font-size: 1rem; font-weight: 400; color: var(--gray); vertical-align: baseline; }
+    .price-pp { color: var(--gray); font-size: 0.82rem; margin: 0.2rem 0 1.5rem; }
+    .price-features { list-style: none; text-align: left; margin-bottom: 2rem; }
+    .price-features li { padding: 0.4rem 0; color: var(--gray); font-size: 0.88rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--light-gray); }
+    .price-features li:last-child { border-bottom: none; }
+    .price-features li i { color: var(--secondary); font-size: 0.85rem; }
+    .trial-note { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 0.7rem 1rem; margin-top: 1rem; font-size: 0.82rem; color: #15803d; font-weight: 600; }
+
+    /* ── LOCATIONS & WEATHER ── */
+    #locations { background: var(--primary); }
+    #locations .section-tag { color: var(--accent); }
+    #locations .section-header h2 { color: white; }
+    #locations .section-header p { color: rgba(255,255,255,0.65); }
+    .locations-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .loc-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 2rem; transition: background 0.3s; }
+    .loc-card:hover { background: rgba(255,255,255,0.11); }
+    .loc-badge { display: inline-block; background: var(--accent); color: var(--primary); font-size: 0.78rem; font-weight: 700; padding: 0.2rem 0.7rem; border-radius: 15px; margin-bottom: 0.8rem; }
+    .loc-card h3 { color: var(--accent); font-size: 1.2rem; margin-bottom: 0.3rem; }
+    .loc-addr { display: flex; align-items: center; gap: 0.4rem; color: rgba(255,255,255,0.6); font-size: 0.85rem; margin-bottom: 1rem; }
+    .loc-card > p { color: rgba(255,255,255,0.65); font-size: 0.88rem; line-height: 1.65; margin-bottom: 1rem; }
+    .weather-box { background: rgba(0,0,0,0.2); border-radius: 12px; padding: 1.2rem; margin-top: 0.5rem; }
+    .weather-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
+    .weather-hdr span { color: rgba(255,255,255,0.6); font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    .weather-refresh-btn { background: none; border: none; color: rgba(255,255,255,0.4); cursor: pointer; font-size: 0.75rem; transition: color 0.2s; }
+    .weather-refresh-btn:hover { color: var(--accent); }
+    .weather-body { display: flex; align-items: center; gap: 1rem; }
+    .w-icon { font-size: 2.3rem; }
+    .w-temp { font-size: 1.9rem; font-weight: 800; color: white; }
+    .w-desc { font-size: 0.8rem; color: rgba(255,255,255,0.65); }
+    .weather-meta { display: flex; gap: 1rem; margin-top: 0.7rem; flex-wrap: wrap; }
+    .weather-meta span { font-size: 0.78rem; color: rgba(255,255,255,0.55); display: flex; align-items: center; gap: 0.3rem; }
+    .weather-loading { color: rgba(255,255,255,0.5); font-size: 0.85rem; text-align: center; padding: 0.5rem 0; }
+    .court-status { font-size: 0.78rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 10px; margin-left: auto; }
+    .court-good { background: rgba(134,239,172,0.2); color: #86efac; }
+    .court-bad  { background: rgba(252,165,165,0.2); color: #fca5a5; }
+    .loc-dir { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--accent); font-size: 0.82rem; font-weight: 600; margin-top: 1rem; transition: opacity 0.2s; }
+    .loc-dir:hover { opacity: 0.75; color: var(--accent); }
+    .location-note { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 1.2rem 1.5rem; margin-top: 2rem; text-align: center; color: rgba(255,255,255,0.7); font-size: 0.9rem; line-height: 1.6; }
+    .location-note strong { color: white; }
+
+    /* ── TEAM ── */
+    .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; max-width: 900px; margin: 0 auto; }
+    .coach-card { background: var(--bg); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s; }
+    .coach-card:hover { transform: translateY(-5px); }
+    .coach-top { background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 2.5rem 2rem; text-align: center; }
+    .coach-initials { width: 75px; height: 75px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.6rem; color: var(--primary); margin: 0 auto 1rem; border: 3px solid rgba(255,255,255,0.25); }
+    .coach-top h3 { color: white; font-size: 1.3rem; }
+    .coach-role { color: var(--accent); font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-top: 0.3rem; }
+    .coach-body { padding: 1.5rem 1.8rem 2rem; }
+    .coach-badge { display: inline-block; background: #ecfdf5; color: var(--secondary); font-size: 0.8rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 15px; margin-bottom: 1rem; }
+    .coach-body p { color: var(--gray); font-size: 0.88rem; line-height: 1.7; margin-bottom: 0.8rem; }
+    .coach-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin: 1rem 0; }
+    .cs-box { background: var(--white); border-radius: 10px; padding: 0.7rem; text-align: center; font-size: 0.78rem; color: var(--gray); line-height: 1.4; }
+    .cs-box .cs-ic { font-size: 1.1rem; display: block; margin-bottom: 0.2rem; }
+    .coach-phone { display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--light-gray); color: var(--secondary); font-weight: 700; font-size: 0.9rem; }
+    .coach-phone a { color: var(--secondary); transition: color 0.2s; }
+    .coach-phone a:hover { color: var(--primary); }
+
+    /* ── EQUIPMENT ── */
+    .equipment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .equip-card { background: var(--white); border-radius: 16px; padding: 2rem; box-shadow: var(--shadow); }
+    .equip-card h3 { display: flex; align-items: center; gap: 0.7rem; color: var(--primary); font-size: 1.1rem; margin-bottom: 1.2rem; }
+    .equip-card h3 .eq-ic { background: var(--secondary); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .equip-list { list-style: none; }
+    .equip-list li { display: flex; align-items: center; gap: 0.7rem; padding: 0.5rem 0; border-bottom: 1px solid var(--light-gray); color: var(--gray); font-size: 0.9rem; }
+    .equip-list li:last-child { border-bottom: none; }
+    .eq-check { color: #16a34a; }
+    .eq-dot   { color: #2563eb; }
+    .equip-tip { background: var(--white); border-left: 4px solid var(--accent); border-radius: 0 12px 12px 0; padding: 1.2rem 1.5rem; margin-top: 2rem; box-shadow: var(--shadow); font-size: 0.92rem; color: var(--gray); line-height: 1.7; }
+    .equip-tip strong { color: var(--primary); }
+
+    /* ── BOOKING ── */
+    .booking-wrap { max-width: 720px; margin: 0 auto; }
+    .booking-card { background: var(--bg); border-radius: 20px; padding: 2.5rem; box-shadow: var(--shadow); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { margin-bottom: 1.3rem; }
+    .form-group label { display: block; font-weight: 600; font-size: 0.88rem; color: var(--primary); margin-bottom: 0.4rem; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.7rem 1rem; border: 2px solid var(--light-gray); border-radius: 10px; font-family: 'Open Sans', sans-serif; font-size: 0.92rem; color: var(--dark); background: var(--white); outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(26,107,74,0.1); }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .no-slots-notice { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px; padding: 0.8rem 1rem; font-size: 0.85rem; color: #92400e; margin-top: 0.5rem; display: none; }
+    .booking-disclaimer { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 1rem; margin-bottom: 1.5rem; font-size: 0.85rem; color: #15803d; font-weight: 600; text-align: center; }
+    .submit-btn { width: 100%; padding: 1rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: none; border-radius: 12px; font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s, transform 0.2s; }
+    .submit-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+    .success-card { background: #f0fdf4; border: 2px solid #86efac; border-radius: 16px; padding: 2.5rem; text-align: center; display: none; }
+    .success-card h3 { color: #15803d; font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .success-card p { color: #166534; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--primary); }
+    #contact .section-tag { color: var(--accent); }
+    #contact .section-header h2 { color: white; }
+    #contact .section-header p { color: rgba(255,255,255,0.65); }
+    .contact-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 760px; margin: 0 auto; }
+    .contact-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 2rem; text-align: center; transition: background 0.3s; }
+    .contact-card:hover { background: rgba(255,255,255,0.11); }
+    .contact-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .contact-card h3 { color: var(--accent); font-size: 1.1rem; margin-bottom: 0.4rem; }
+    .contact-card .role { color: rgba(255,255,255,0.6); font-size: 0.85rem; margin-bottom: 0.8rem; }
+    .contact-card a { color: white; font-size: 1.05rem; font-weight: 700; transition: color 0.2s; }
+    .contact-card a:hover { color: var(--accent); }
+    .contact-footer-note { text-align: center; margin-top: 2.5rem; color: rgba(255,255,255,0.55); font-size: 0.88rem; }
+    .contact-footer-note strong { color: white; }
+
+    /* ── FLYER ── */
+    #flyer { padding: 5rem 0; }
+    .flyer-wrap { max-width: 520px; margin: 0 auto; }
+    .flyer-card {
+        background: linear-gradient(160deg, var(--primary) 0%, #1a6040 60%, #226645 100%);
+        border-radius: 20px; padding: 3rem 2.5rem; color: white; text-align: center;
+        position: relative; overflow: hidden;
+        box-shadow: 0 20px 60px rgba(13,59,46,0.5);
+    }
+    .flyer-card::before { content: ''; position: absolute; width: 350px; height: 350px; border: 2px solid rgba(212,237,23,0.07); border-radius: 50%; top: -100px; right: -100px; }
+    .flyer-inner { position: relative; z-index: 1; }
+    .flyer-emoji { font-size: 3rem; margin-bottom: 0.3rem; }
+    .flyer-title { font-family: 'Montserrat', sans-serif; font-size: 1.9rem; font-weight: 800; line-height: 1.1; margin-bottom: 0.3rem; }
+    .flyer-title span { color: var(--accent); }
+    .flyer-sub { color: rgba(255,255,255,0.7); font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 1.5rem; }
+    .flyer-divider { width: 50px; height: 3px; background: var(--accent); margin: 0 auto 1.5rem; border-radius: 2px; }
+    .flyer-block { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.2rem; margin-bottom: 1rem; }
+    .flyer-block-title { color: var(--accent); font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.7rem; }
+    .flyer-free { display: inline-block; background: var(--accent); color: var(--primary); font-weight: 800; font-size: 0.9rem; padding: 0.4rem 1.2rem; border-radius: 25px; margin-bottom: 0.4rem; }
+    .flyer-free-sub { font-size: 0.78rem; color: rgba(255,255,255,0.65); }
+    .flyer-pricing-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.5rem; }
+    .flyer-price-box { background: rgba(255,255,255,0.09); border-radius: 8px; padding: 0.8rem 0.4rem; }
+    .fp-val { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--accent); }
+    .fp-label { font-size: 0.7rem; color: rgba(255,255,255,0.65); margin-top: 0.2rem; line-height: 1.3; }
+    .flyer-locs { font-size: 0.82rem; color: rgba(255,255,255,0.75); line-height: 1.9; }
+    .flyer-contacts { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+    .flyer-contact-box { background: rgba(255,255,255,0.08); border-radius: 8px; padding: 0.7rem; }
+    .fc-n { font-size: 0.8rem; font-weight: 700; color: var(--accent); }
+    .fc-p { font-size: 0.82rem; color: rgba(255,255,255,0.85); margin-top: 0.1rem; }
+    .flyer-qr-row { display: flex; align-items: center; gap: 1.2rem; background: white; border-radius: 12px; padding: 1rem 1.3rem; margin-top: 1rem; }
+    #flyer-qr-box { flex-shrink: 0; width: 75px; height: 75px; }
+    #flyer-qr-box canvas, #flyer-qr-box img { width: 75px !important; height: 75px !important; }
+    .qr-label { text-align: left; }
+    .qr-label h4 { color: var(--primary); font-size: 0.88rem; margin-bottom: 0.2rem; }
+    .qr-label p { color: var(--gray); font-size: 0.75rem; line-height: 1.4; }
+    .qr-label small { color: #aaa; font-size: 0.68rem; font-style: italic; }
+    .flyer-print-btn { margin-top: 2rem; text-align: center; }
+
+    /* ── FOOTER ── */
+    footer { background: #081d15; padding: 2rem; text-align: center; color: rgba(255,255,255,0.4); font-size: 0.82rem; }
+    footer span { color: var(--accent); }
+
+    /* ── ADMIN BUTTON ── */
+    .admin-fab { position: fixed; bottom: 1.5rem; right: 1.5rem; width: 48px; height: 48px; background: var(--primary); color: white; border: none; border-radius: 50%; font-size: 1.2rem; cursor: pointer; z-index: 900; box-shadow: 0 4px 15px rgba(0,0,0,0.35); transition: background 0.2s; }
+    .admin-fab:hover { background: var(--secondary); }
+
+    /* ── ADMIN MODAL ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-overlay.open { display: flex; }
+    .admin-modal { background: white; border-radius: 20px; padding: 2.5rem; width: 100%; max-width: 780px; max-height: 88vh; overflow-y: auto; position: relative; }
+    .admin-modal h2 { color: var(--primary); font-size: 1.4rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid var(--light-gray); }
+    .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--gray); line-height: 1; }
+    .modal-close:hover { color: var(--dark); }
+    .admin-login-wrap { max-width: 320px; margin: 0 auto; text-align: center; }
+    .admin-login-wrap h3 { color: var(--primary); margin-bottom: 1.5rem; font-size: 1.1rem; }
+    .admin-hint { font-size: 0.78rem; color: var(--gray); margin-top: 0.8rem; }
+    .admin-content { display: none; }
+    .admin-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .a-tab { padding: 0.5rem 1.1rem; border: 2px solid var(--light-gray); border-radius: 25px; background: none; font-family: 'Montserrat', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--gray); cursor: pointer; transition: all 0.2s; }
+    .a-tab.active { background: var(--primary); border-color: var(--primary); color: white; }
+    .a-tab-content { display: none; }
+    .a-tab-content.active { display: block; }
+    .slot-form-box { background: var(--bg); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .slot-form-box h4 { color: var(--primary); margin-bottom: 1rem; font-size: 0.95rem; }
+    .slots-ul { list-style: none; }
+    .slot-li { display: flex; align-items: center; justify-content: space-between; background: var(--bg); border-radius: 8px; padding: 0.8rem 1rem; margin-bottom: 0.5rem; font-size: 0.88rem; }
+    .sl-info { font-weight: 600; color: var(--dark); }
+    .sl-meta { font-size: 0.78rem; color: var(--gray); margin-top: 0.1rem; }
+    .btn-del-slot { background: #fee2e2; color: #dc2626; border: none; border-radius: 6px; padding: 0.3rem 0.7rem; font-size: 0.78rem; font-weight: 700; cursor: pointer; flex-shrink: 0; }
+    .booking-admin-item { background: var(--bg); border-radius: 12px; padding: 1.2rem; margin-bottom: 1rem; border-left: 4px solid var(--secondary); }
+    .bai-hdr { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .bai-hdr h4 { color: var(--primary); font-size: 0.95rem; }
+    .status-badge { font-size: 0.72rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 10px; }
+    .s-pending   { background: #fff8e1; color: #7d5a00; }
+    .s-confirmed { background: #dcfce7; color: #166534; }
+    .bai-details { color: var(--gray); font-size: 0.82rem; line-height: 1.8; }
+    .bai-actions { display: flex; gap: 0.5rem; margin-top: 0.8rem; }
+    .btn-confirm-bk { background: #dcfce7; color: #166534; border: none; border-radius: 6px; padding: 0.3rem 0.7rem; font-size: 0.78rem; font-weight: 700; cursor: pointer; }
+    .btn-del-bk     { background: #fee2e2; color: #dc2626; border: none; border-radius: 6px; padding: 0.3rem 0.7rem; font-size: 0.78rem; font-weight: 700; cursor: pointer; }
+    .admin-danger-btn { background: #fee2e2; color: #dc2626; border: none; border-radius: 8px; padding: 0.6rem 1.2rem; font-weight: 700; font-size: 0.85rem; cursor: pointer; }
+    .admin-logout-btn { background: var(--bg); color: var(--primary); border: 2px solid var(--light-gray); border-radius: 8px; padding: 0.65rem 1.5rem; font-weight: 700; font-size: 0.9rem; cursor: pointer; width: 100%; margin-top: 1.5rem; transition: all 0.2s; }
+    .admin-logout-btn:hover { border-color: var(--secondary); color: var(--secondary); }
+    .pass-msg { font-size: 0.82rem; margin-top: 0.7rem; }
+    .pass-ok  { color: #16a34a; }
+    .pass-err { color: #dc2626; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+        .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+        .about-grid   { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+        .nav-menu { display: none; position: fixed; top: 70px; left: 0; right: 0; background: var(--primary); flex-direction: column; padding: 1.5rem 2rem 2rem; gap: 1.2rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        .nav-menu.open { display: flex; }
+        .hamburger { display: flex; }
+        .locations-grid, .team-grid, .equipment-grid, .contact-cards { grid-template-columns: 1fr; }
+        .form-row { grid-template-columns: 1fr; }
+        .flyer-pricing-row, .flyer-contacts { grid-template-columns: 1fr; }
+        .booking-card, .admin-modal { padding: 1.5rem; }
+        .hero-stats { gap: 1.5rem; }
+        .about-checks { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════ -->
+<nav id="navbar">
+    <a href="#hero" class="nav-brand">
+        <span class="brand-icon">🎾</span>
+        <div class="brand-name">Ace Forward<br><span>Tennis Academy</span></div>
+    </a>
+    <ul class="nav-menu" id="navMenu">
+        <li><a href="#about">About</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#locations">Locations</a></li>
+        <li><a href="#team">Our Team</a></li>
+        <li><a href="#equipment">What to Bring</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#book" class="nav-cta">Book Free Trial</a></li>
+    </ul>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     HERO
+═══════════════════════════════════════ -->
+<section id="hero">
+    <div class="hero-inner">
+        <div class="hero-badge">📍 Serving Concord &amp; Harrisburg, NC</div>
+        <h1>Ace Forward<br><span>Tennis Academy</span></h1>
+        <p class="hero-tagline">Where Beginners Become Champions</p>
+        <p>Expert tennis coaching for all skill levels — from your very first rally to competing at the varsity level. Flexible scheduling, two convenient court locations, and a completely <strong>free first session</strong> for every new student.</p>
+        <div class="hero-btns">
+            <a href="#book" class="btn btn-primary">🎾 Book Your Free Trial</a>
+            <a href="#pricing" class="btn btn-outline-white">View Pricing</a>
+        </div>
+        <div class="hero-stats">
+            <div class="hero-stat"><div class="num">FREE</div><div class="lbl">First Session</div></div>
+            <div class="hero-stat"><div class="num">2</div><div class="lbl">Court Locations</div></div>
+            <div class="hero-stat"><div class="num">2</div><div class="lbl">Varsity Coaches</div></div>
+            <div class="hero-stat"><div class="num">6</div><div class="lbl">Max Group Size</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     ABOUT
+═══════════════════════════════════════ -->
+<section id="about" class="section section-alt">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-text reveal">
+                <span class="section-tag">About Us</span>
+                <h2>Elevating Every Player's Game</h2>
+                <p>Ace Forward Tennis Academy was founded by two dedicated, varsity-level tennis athletes with a shared mission: make quality tennis coaching accessible, affordable, and genuinely impactful for players of every background and skill level.</p>
+                <p>Whether you've never held a racket or you're preparing for your school's varsity season, our coaches bring real competitive experience, structured lesson plans, and an unwavering commitment to your growth on the court.</p>
+                <div class="about-checks">
+                    <div class="check-item"><i class="fas fa-check-circle"></i> All Skill Levels Welcome</div>
+                    <div class="check-item"><i class="fas fa-check-circle"></i> Flexible Scheduling</div>
+                    <div class="check-item"><i class="fas fa-check-circle"></i> Two Convenient Locations</div>
+                    <div class="check-item"><i class="fas fa-check-circle"></i> Small &amp; Group Sessions</div>
+                    <div class="check-item"><i class="fas fa-check-circle"></i> Equipment Provided</div>
+                    <div class="check-item"><i class="fas fa-check-circle"></i> Proven Track Record</div>
+                </div>
+            </div>
+            <div class="about-visual reveal">
+                <div class="av-icon">🎾</div>
+                <h3>Our Commitment to You</h3>
+                <p>We've helped students grow from complete beginners to competitive varsity-level players. Our approach is patient, personalized, and built around your goals — not a one-size-fits-all curriculum. Every player is different, and we coach accordingly.</p>
+            </div>
+        </div>
+        <div class="trial-callout reveal">
+            <h3>🌟 First Session is Always FREE for New Students!</h3>
+            <p>Every new student receives a complimentary 1-hour trial lesson — no commitment, no pressure. Come experience our coaching before you decide.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     PRICING
+═══════════════════════════════════════ -->
+<section id="pricing" class="section">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-tag">Pricing Plans</span>
+            <h2>Simple, Affordable Rates</h2>
+            <p>Transparent pricing with no hidden fees. And remember — your very first hour is always on us!</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="price-card reveal">
+                <div class="price-icon">🎾</div>
+                <h3>Individual</h3>
+                <p class="price-size">1-on-1 Session</p>
+                <div class="price-amount">$25<sub>/hr</sub></div>
+                <p class="price-pp">per session</p>
+                <ul class="price-features">
+                    <li><i class="fas fa-check"></i> Fully personalized instruction</li>
+                    <li><i class="fas fa-check"></i> Full one-on-one coach focus</li>
+                    <li><i class="fas fa-check"></i> Balls &amp; equipment included</li>
+                    <li><i class="fas fa-check"></i> Custom drill plans</li>
+                    <li><i class="fas fa-check"></i> Flexible scheduling</li>
+                </ul>
+                <a href="#book" class="btn btn-dark btn-block">Book Now</a>
+                <div class="trial-note">🌟 First hour is FREE for all new students!</div>
+            </div>
+            <div class="price-card featured reveal">
+                <div class="featured-badge">⭐ Most Popular</div>
+                <div class="price-icon">👥</div>
+                <h3>Small Group</h3>
+                <p class="price-size">2–3 Players</p>
+                <div class="price-amount">$15<sub>/hr</sub></div>
+                <p class="price-pp">per person</p>
+                <ul class="price-features">
+                    <li><i class="fas fa-check"></i> Competitive group drills</li>
+                    <li><i class="fas fa-check"></i> Rally &amp; live ball practice</li>
+                    <li><i class="fas fa-check"></i> Balls &amp; equipment included</li>
+                    <li><i class="fas fa-check"></i> Great for friends &amp; siblings</li>
+                    <li><i class="fas fa-check"></i> Flexible scheduling</li>
+                </ul>
+                <a href="#book" class="btn btn-primary btn-block">Book Now</a>
+                <div class="trial-note">🌟 First hour is FREE for all new students!</div>
+            </div>
+            <div class="price-card reveal">
+                <div class="price-icon">🏆</div>
+                <h3>Group Session</h3>
+                <p class="price-size">4–6 Players</p>
+                <div class="price-amount">$10<sub>/hr</sub></div>
+                <p class="price-pp">per person</p>
+                <ul class="price-features">
+                    <li><i class="fas fa-check"></i> Group drills &amp; match play</li>
+                    <li><i class="fas fa-check"></i> Tournament-style practice</li>
+                    <li><i class="fas fa-check"></i> Balls &amp; equipment included</li>
+                    <li><i class="fas fa-check"></i> Most affordable option</li>
+                    <li><i class="fas fa-check"></i> Fun, social atmosphere</li>
+                </ul>
+                <a href="#book" class="btn btn-dark btn-block">Book Now</a>
+                <div class="trial-note">🌟 First hour is FREE for all new students!</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     LOCATIONS & WEATHER
+═══════════════════════════════════════ -->
+<section id="locations" class="section">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-tag">Our Courts</span>
+            <h2>Two Convenient Locations</h2>
+            <p>We are flexible and work around our clients. Currently operating at public tennis courts in both Concord and Harrisburg, NC.</p>
+        </div>
+        <div class="locations-grid">
+            <!-- Concord -->
+            <div class="loc-card reveal">
+                <div class="loc-badge">📍 Harrisburg, NC</div>
+                <h3>Hickory Ridge High School</h3>
+                <p class="loc-addr"><i class="fas fa-map-marker-alt"></i> Public Tennis Courts · Harrisburg, NC</p>
+                <p>Accessible public courts in Harrisburg. Multiple courts with plenty of space for both individual and group sessions — ideal for players in the Harrisburg area.</p>
+                <div class="weather-box">
+                    <div class="weather-hdr">
+                        <span>🌤 Live Weather — Harrisburg</span>
+                        <button class="weather-refresh-btn" onclick="loadWeather('harrisburg')"><i class="fas fa-sync-alt"></i> Refresh</button>
+                    </div>
+                    <div id="w-harrisburg"><div class="weather-loading"><i class="fas fa-circle-notch fa-spin"></i> Loading weather...</div></div>
+                </div>
+                <a href="https://maps.google.com/?q=Hickory+Ridge+High+School+Harrisburg+NC" target="_blank" class="loc-dir">
+                    <i class="fas fa-directions"></i> Get Directions
+                </a>
+            </div>
+            <!-- Harrisburg -->
+            <div class="loc-card reveal">
+                <div class="loc-badge">📍 Concord, NC</div>
+                <h3>Northwest Cabarrus High School</h3>
+                <p class="loc-addr"><i class="fas fa-map-marker-alt"></i> Public Tennis Courts · Concord, NC</p>
+                <p>Quality public courts serving the Harrisburg and northwest Cabarrus County community — a convenient option for students in the Harrisburg area.</p>
+                <div class="weather-box">
+                    <div class="weather-hdr">
+                        <span>🌤 Live Weather — Concord</span>
+                        <button class="weather-refresh-btn" onclick="loadWeather('concord')"><i class="fas fa-sync-alt"></i> Refresh</button>
+                    </div>
+                    <div id="w-concord"><div class="weather-loading"><i class="fas fa-circle-notch fa-spin"></i> Loading weather...</div></div>
+                </div>
+                <a href="https://maps.google.com/?q=Northwest+Cabarrus+High+School+Concord+NC" target="_blank" class="loc-dir">
+                    <i class="fas fa-directions"></i> Get Directions
+                </a>
+            </div>
+        </div>
+        <div class="location-note reveal">
+            <i class="fas fa-info-circle" style="color:var(--accent);"></i>
+            <strong> Flexible Location Policy:</strong> Court locations may be adjusted based on client preference and availability. Your coach will confirm the specific court when your booking is finalized.
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     TEAM
+═══════════════════════════════════════ -->
+<section id="team" class="section section-alt">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-tag">Meet the Coaches</span>
+            <h2>Our Team</h2>
+            <p>Competitive varsity athletes who are passionate about developing the next generation of tennis players. Real experience. Real results.</p>
+        </div>
+        <div class="team-grid">
+            <!-- Akhil -->
+            <div class="coach-card reveal">
+                <div class="coach-top">
+                    <div class="coach-initials">AS</div>
+                    <h3>Akhil Sathish</h3>
+                    <p class="coach-role">Head Coach &amp; Co-Founder</p>
+                </div>
+                <div class="coach-body">
+                    <span class="coach-badge">🏆 All-Conference Honoree</span>
+                    <p>Akhil is a standout competitor at Hickory Ridge High School, where he earned <strong>All-Conference recognition</strong> while competing as the team's No. 3 singles player. His competitive experience and deep technical understanding of the game make him an exceptional coach for players at every level.</p>
+                    <p>Akhil has a demonstrated track record of developing players — taking students from their very first session all the way to competing confidently at the varsity level.</p>
+                    <div class="coach-stats-grid">
+                        <div class="cs-box"><span class="cs-ic">🏫</span>Hickory Ridge High School</div>
+                        <div class="cs-box"><span class="cs-ic">🎾</span>Varsity No. 3 Singles</div>
+                        <div class="cs-box"><span class="cs-ic">⭐</span>All-Conference Athlete</div>
+                        <div class="cs-box"><span class="cs-ic">👨‍🏫</span>Proven Coach</div>
+                    </div>
+                    <div class="coach-phone">
+                        <i class="fas fa-phone"></i>
+                        <a href="tel:7043228669">(704) 322-8669</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Rudra -->
+            <div class="coach-card reveal">
+                <div class="coach-top">
+                    <div class="coach-initials">RS</div>
+                    <h3>Rudra Shah</h3>
+                    <p class="coach-role">Coach &amp; Co-Founder</p>
+                </div>
+                <div class="coach-body">
+                    <span class="coach-badge">🎾 Varsity Athlete &amp; Team Manager</span>
+                    <p>Rudra brings a uniquely well-rounded perspective to coaching, having served as both a <strong>varsity-level competitor</strong> and as team manager — a dual role that deepened his understanding of player development, strategy, and what it takes to succeed at the scholastic level.</p>
+                    <p>His ability to connect with students of all ages and backgrounds makes every session engaging, structured, and highly effective. Rudra's students have progressed from complete beginners to varsity-caliber competitors.</p>
+                    <div class="coach-stats-grid">
+                        <div class="cs-box"><span class="cs-ic">🏅</span>Varsity Competitor</div>
+                        <div class="cs-box"><span class="cs-ic">📋</span>Team Manager</div>
+                        <div class="cs-box"><span class="cs-ic">📈</span>Player Development</div>
+                        <div class="cs-box"><span class="cs-ic">👨‍🏫</span>Proven Coach</div>
+                    </div>
+                    <div class="coach-phone">
+                        <i class="fas fa-phone"></i>
+                        <a href="tel:7043881244">(704) 388-1244</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     EQUIPMENT
+═══════════════════════════════════════ -->
+<section id="equipment" class="section">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-tag">Be Prepared</span>
+            <h2>What to Bring &amp; What We Provide</h2>
+            <p>We want every session to run smoothly from the moment you arrive. Here's a quick breakdown of what's covered and what to pack.</p>
+        </div>
+        <div class="equipment-grid">
+            <div class="equip-card reveal">
+                <h3><span class="eq-ic"><i class="fas fa-check"></i></span> We Provide</h3>
+                <ul class="equip-list">
+                    <li><i class="fas fa-check-circle eq-check"></i> Tennis balls for the full session</li>
+                    <li><i class="fas fa-check-circle eq-check"></i> Ball hopper &amp; pickup equipment</li>
+                    <li><i class="fas fa-check-circle eq-check"></i> Cones &amp; training markers (as needed)</li>
+                    <li><i class="fas fa-check-circle eq-check"></i> Structured drills &amp; lesson plans</li>
+                    <li><i class="fas fa-check-circle eq-check"></i> Court access coordination</li>
+                    <li><i class="fas fa-check-circle eq-check"></i> Snacks or water if absolutely necessary</li>
+                </ul>
+            </div>
+            <div class="equip-card reveal">
+                <h3><span class="eq-ic"><i class="fas fa-bag-shopping"></i></span> Students Should Bring</h3>
+                <ul class="equip-list">
+                    <li><i class="fas fa-circle-dot eq-dot"></i> Your own tennis racket</li>
+                    <li><i class="fas fa-circle-dot eq-dot"></i> Water bottle (stay hydrated!)</li>
+                    <li><i class="fas fa-circle-dot eq-dot"></i> Athletic footwear (court shoes recommended)</li>
+                    <li><i class="fas fa-circle-dot eq-dot"></i> Comfortable athletic clothing</li>
+                    <li><i class="fas fa-circle-dot eq-dot"></i> Sunscreen for outdoor sessions</li>
+                    <li><i class="fas fa-circle-dot eq-dot"></i> An open mind &amp; great attitude 😊</li>
+                </ul>
+            </div>
+        </div>
+        <div class="equip-tip reveal">
+            <strong>💡 Don't own a racket yet?</strong> No problem — reach out to your coach before your session and we'll do our best to help arrange one for you. We never want equipment to be a barrier to getting on the court.
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     BOOKING
+═══════════════════════════════════════ -->
+<section id="book" class="section section-alt">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-tag">Sign Up</span>
+            <h2>Book Your Session</h2>
+            <p>Ready to start your tennis journey? Fill out the form below and we'll reach out to confirm your session. First-timers always play their first hour for free!</p>
+        </div>
+        <div class="booking-wrap">
+            <div class="booking-card reveal">
+                <div class="success-card" id="successCard">
+                    <div style="font-size:3rem;margin-bottom:1rem;">🎾</div>
+                    <h3>Booking Request Received!</h3>
+                    <p>Thank you for signing up with Ace Forward Tennis Academy! One of our coaches will reach out shortly to confirm your session details. We can't wait to see you on the court!</p>
+                </div>
+                <form id="bookingForm" onsubmit="handleBookingSubmit(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fName">First Name *</label>
+                            <input type="text" id="fName" required placeholder="First name">
+                        </div>
+                        <div class="form-group">
+                            <label for="lName">Last Name *</label>
+                            <input type="text" id="lName" required placeholder="Last name">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="emailIn">Email Address *</label>
+                            <input type="email" id="emailIn" required placeholder="your@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneIn">Phone Number *</label>
+                            <input type="tel" id="phoneIn" required placeholder="(704) xxx-xxxx">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ageIn">Age (Optional)</label>
+                            <input type="number" id="ageIn" min="4" max="99" placeholder="Your age">
+                        </div>
+                        <div class="form-group">
+                            <label for="levelIn">Experience Level *</label>
+                            <select id="levelIn" required>
+                                <option value="">Select level</option>
+                                <option value="beginner">Complete Beginner</option>
+                                <option value="some">Some Experience</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="advanced">Advanced / Competitive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="locPref">Preferred Location *</label>
+                        <select id="locPref" required onchange="refreshSlots()">
+                            <option value="">Select a location</option>
+                            <option value="hickory">Hickory Ridge High School — Concord</option>
+                            <option value="northwest">Northwest Cabarrus High School — Harrisburg</option>
+                            <option value="flexible">Flexible — Either Location Works</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="groupIn">Group Size *</label>
+                        <select id="groupIn" required>
+                            <option value="">Select group size</option>
+                            <option value="1">Just Me — Individual ($25/hr)</option>
+                            <option value="2-3">2–3 Players ($15/person/hr)</option>
+                            <option value="4-6">4–6 Players ($10/person/hr)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="slotIn">Preferred Date &amp; Time *</label>
+                        <select id="slotIn" required>
+                            <option value="">— Select a date &amp; time —</option>
+                        </select>
+                        <div class="no-slots-notice" id="noSlotsNotice">
+                            ⚠️ No available time slots for this location right now. Please contact a coach directly to schedule your session.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="notesIn">Additional Notes / Questions</label>
+                        <textarea id="notesIn" placeholder="Any questions, special requests, or anything you'd like us to know before your session..."></textarea>
+                    </div>
+                    <div class="booking-disclaimer">
+                        ✅ <strong>Reminder:</strong> Your first session is completely FREE — no charge for new student trial lessons!
+                    </div>
+                    <button type="submit" class="submit-btn">🎾 Submit Booking Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CONTACT
+═══════════════════════════════════════ -->
+<section id="contact" class="section">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-tag">Get in Touch</span>
+            <h2>Contact Our Coaches</h2>
+            <p>Have a question before booking? Reach out directly to either of our coaches — we're happy to help!</p>
+        </div>
+        <div class="contact-cards">
+            <div class="contact-card reveal">
+                <div class="contact-icon">📞</div>
+                <h3>Akhil Sathish</h3>
+                <p class="role">Head Coach &amp; Co-Founder</p>
+                <a href="tel:7043228669">(704) 322-8669</a>
+            </div>
+            <div class="contact-card reveal">
+                <div class="contact-icon">📞</div>
+                <h3>Rudra Shah</h3>
+                <p class="role">Coach &amp; Co-Founder</p>
+                <a href="tel:7043881244">(704) 388-1244</a>
+            </div>
+        </div>
+        <div class="contact-footer-note reveal">
+            📍 Serving <strong>Concord</strong> &amp; <strong>Harrisburg</strong>, North Carolina<br>
+            <span>⏰ Availability varies — reach out and we'll find a time that works best for you</span>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FLYER
+═══════════════════════════════════════ -->
+<section id="flyer" class="section section-alt">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-tag">Share the Word</span>
+            <h2>Printable Flyer</h2>
+            <p>Know someone who wants to learn tennis? Share our flyer or have them scan the QR code to visit the site and book their free trial instantly!</p>
+        </div>
+        <div class="flyer-wrap reveal">
+            <div class="flyer-card" id="flyerCard">
+                <div class="flyer-inner">
+                    <div class="flyer-emoji">🎾</div>
+                    <div class="flyer-title">Ace Forward<br><span>Tennis Academy</span></div>
+                    <p class="flyer-sub">Where Beginners Become Champions</p>
+                    <div class="flyer-divider"></div>
+                    <div class="flyer-block">
+                        <div class="flyer-block-title">✨ New Student Special</div>
+                        <div class="flyer-free">🎉 First Hour is FREE!</div>
+                        <p class="flyer-free-sub">No commitment required. Just show up and play.</p>
+                    </div>
+                    <div class="flyer-block">
+                        <div class="flyer-block-title">💰 Session Rates (Per Hour)</div>
+                        <div class="flyer-pricing-row">
+                            <div class="flyer-price-box"><div class="fp-val">$25</div><div class="fp-label">1-on-1 Individual</div></div>
+                            <div class="flyer-price-box"><div class="fp-val">$15</div><div class="fp-label">Small Group (2–3)</div></div>
+                            <div class="flyer-price-box"><div class="fp-val">$10</div><div class="fp-label">Group (4–6 Players)</div></div>
+                        </div>
+                    </div>
+                    <div class="flyer-block">
+                        <div class="flyer-block-title">📍 Court Locations</div>
+                        <div class="flyer-locs">
+                            🏫 Hickory Ridge High School — Concord, NC<br>
+                            🏫 Northwest Cabarrus High School — Harrisburg, NC
+                        </div>
+                    </div>
+                    <div class="flyer-block">
+                        <div class="flyer-block-title">📞 Contact Our Coaches</div>
+                        <div class="flyer-contacts">
+                            <div class="flyer-contact-box"><div class="fc-n">Akhil Sathish</div><div class="fc-p">(704) 322-8669</div></div>
+                            <div class="flyer-contact-box"><div class="fc-n">Rudra Shah</div><div class="fc-p">(704) 388-1244</div></div>
+                        </div>
+                    </div>
+                    <div class="flyer-qr-row">
+                        <div id="flyer-qr-box"></div>
+                        <div class="qr-label">
+                            <h4>📲 Scan to Book Online</h4>
+                            <p>Visit our website to check available times and sign up for your FREE trial session!</p>
+                            <small>aceforwardtennis.com</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flyer-print-btn">
+                <button class="btn btn-dark" onclick="printFlyer()">🖨️ Print / Save as PDF</button>
+                <p style="margin-top:0.8rem;font-size:0.8rem;color:var(--gray);">Tip: In the print dialog, choose "Save as PDF" to get a digital version for sharing.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════ -->
+<footer>
+    <p>🎾 <span>Ace Forward Tennis Academy</span> — Concord &amp; Harrisburg, NC — <em>"Where Beginners Become Champions"</em></p>
+    <p style="margin-top:0.4rem;">© 2025 Ace Forward Tennis Academy. All rights reserved.</p>
+</footer>
+
+<!-- Admin floating button -->
+<button class="admin-fab" onclick="openAdmin()" title="Coach Admin Panel" aria-label="Admin">⚙️</button>
+
+<!-- ═══════════════════════════════════════
+     ADMIN MODAL
+═══════════════════════════════════════ -->
+<div class="modal-overlay" id="adminModal">
+    <div class="admin-modal">
+        <button class="modal-close" onclick="closeAdmin()">✕</button>
+        <h2>⚙️ Admin — Ace Forward</h2>
+
+        <!-- Login -->
+        <div class="admin-login-wrap" id="adminLoginScreen">
+            <h3>🔐 Coach Login</h3>
+            <div class="form-group">
+                <label for="adminPwd">Password</label>
+                <input type="password" id="adminPwd" placeholder="Enter password" onkeydown="if(event.key==='Enter') doLogin()">
+            </div>
+            <button class="btn btn-dark btn-block" onclick="doLogin()">Login</button>
+            <p class="admin-hint">Default password: <strong>aceforward2025</strong></p>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div class="admin-content" id="adminContent">
+            <div class="admin-tabs">
+                <button class="a-tab active" onclick="switchTab(this,'slots')">📅 Manage Slots</button>
+                <button class="a-tab" onclick="switchTab(this,'bookings')">📋 Bookings</button>
+                <button class="a-tab" onclick="switchTab(this,'settings')">🔧 Settings</button>
+            </div>
+
+            <!-- SLOTS TAB -->
+            <div class="a-tab-content active" id="admin-tab-slots">
+                <div class="slot-form-box">
+                    <h4>➕ Add Available Time Slot</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Location</label>
+                            <select id="newSlotLoc">
+                                <option value="hickory">Hickory Ridge (Concord)</option>
+                                <option value="northwest">NW Cabarrus (Harrisburg)</option>
+                                <option value="both">Both Locations</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" id="newSlotDate">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Start Time</label>
+                            <input type="time" id="newSlotTime">
+                        </div>
+                        <div class="form-group">
+                            <label>Duration</label>
+                            <select id="newSlotDur">
+                                <option value="1 hour">1 Hour</option>
+                                <option value="1.5 hours">1.5 Hours</option>
+                                <option value="2 hours">2 Hours</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-dark btn-block" onclick="addSlot()">Add Slot</button>
+                </div>
+                <h4 style="margin-bottom:0.8rem;color:var(--primary);">📅 Current Available Slots</h4>
+                <ul class="slots-ul" id="slotsUl"></ul>
+            </div>
+
+            <!-- BOOKINGS TAB -->
+            <div class="a-tab-content" id="admin-tab-bookings">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
+                    <h4 style="color:var(--primary);">📋 All Booking Requests</h4>
+                    <button class="admin-danger-btn" onclick="clearAllBookings()">🗑️ Clear All</button>
+                </div>
+                <div id="bookingsAdmin"></div>
+            </div>
+
+            <!-- SETTINGS TAB -->
+            <div class="a-tab-content" id="admin-tab-settings">
+                <h4 style="color:var(--primary);margin-bottom:1rem;">🔑 Change Password</h4>
+                <div class="form-group">
+                    <label>Current Password</label>
+                    <input type="password" id="curPwd" placeholder="Current password">
+                </div>
+                <div class="form-group">
+                    <label>New Password</label>
+                    <input type="password" id="newPwd" placeholder="New password (min. 6 characters)">
+                </div>
+                <div class="form-group">
+                    <label>Confirm New Password</label>
+                    <input type="password" id="confirmPwd" placeholder="Confirm new password">
+                </div>
+                <button class="btn btn-dark btn-block" onclick="changePass()">Update Password</button>
+                <div id="pwdMsg" class="pass-msg"></div>
+                <hr style="margin:1.5rem 0;border-color:var(--light-gray);">
+                <button class="admin-logout-btn" onclick="doLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════ -->
+<script>
+/* ── DATA ── */
+const SITE_URL = window.location.href.split('?')[0].split('#')[0];
+let loggedIn = false;
+
+const WMO = {
+    0:{d:'Clear Sky',i:'☀️'}, 1:{d:'Mainly Clear',i:'🌤️'}, 2:{d:'Partly Cloudy',i:'⛅'},
+    3:{d:'Overcast',i:'☁️'}, 45:{d:'Foggy',i:'🌫️'}, 48:{d:'Icy Fog',i:'🌫️'},
+    51:{d:'Light Drizzle',i:'🌦️'}, 53:{d:'Drizzle',i:'🌦️'}, 55:{d:'Heavy Drizzle',i:'🌧️'},
+    61:{d:'Slight Rain',i:'🌧️'}, 63:{d:'Moderate Rain',i:'🌧️'}, 65:{d:'Heavy Rain',i:'🌧️'},
+    71:{d:'Slight Snow',i:'❄️'}, 73:{d:'Snow',i:'❄️'}, 75:{d:'Heavy Snow',i:'❄️'},
+    80:{d:'Rain Showers',i:'🌧️'}, 81:{d:'Rain Showers',i:'🌧️'}, 82:{d:'Heavy Showers',i:'⛈️'},
+    95:{d:'Thunderstorm',i:'⛈️'}, 96:{d:'Thunderstorm + Hail',i:'⛈️'}, 99:{d:'Thunderstorm + Hail',i:'⛈️'}
+};
+const BAD_WMO  = [51,53,55,61,63,65,71,73,75,80,81,82,95,96,99];
+const COORDS   = { concord:{lat:35.4088,lon:-80.5796}, harrisburg:{lat:35.3227,lon:-80.6484} };
+
+/* ── STORAGE ── */
+const getSlots    = () => JSON.parse(localStorage.getItem('afta_slots')    || '[]');
+const saveSlots   = d  => localStorage.setItem('afta_slots',    JSON.stringify(d));
+const getBookings = () => JSON.parse(localStorage.getItem('afta_bookings') || '[]');
+const saveBookings= d  => localStorage.setItem('afta_bookings', JSON.stringify(d));
+const getPass     = () => localStorage.getItem('afta_pass') || 'aceforward2025';
+const savePass    = p  => localStorage.setItem('afta_pass', p);
+
+/* ── NAV ── */
+function toggleMenu() { document.getElementById('navMenu').classList.toggle('open'); }
+document.querySelectorAll('#navMenu a').forEach(a =>
+    a.addEventListener('click', () => document.getElementById('navMenu').classList.remove('open'))
+);
+window.addEventListener('scroll', () => {
+    document.getElementById('navbar').style.boxShadow =
+        window.scrollY > 40 ? '0 4px 20px rgba(0,0,0,0.45)' : '0 2px 8px rgba(0,0,0,0.2)';
+});
+
+/* ── REVEAL ── */
+const obs = new IntersectionObserver(
+    entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('show'); }),
+    {threshold:0.08}
+);
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* ── WEATHER ── */
+async function loadWeather(loc) {
+    const el = document.getElementById('w-' + loc);
+    el.innerHTML = '<div class="weather-loading"><i class="fas fa-circle-notch fa-spin"></i> Fetching weather...</div>';
+    try {
+        const {lat,lon} = COORDS[loc];
+        const r    = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph`);
+        const data = await r.json();
+        const cw   = data.current_weather;
+        const info = WMO[cw.weathercode] || {d:'Unknown',i:'🌡️'};
+        const good = !BAD_WMO.includes(cw.weathercode);
+        el.innerHTML = `
+            <div class="weather-body">
+                <div class="w-icon">${info.i}</div>
+                <div><div class="w-temp">${Math.round(cw.temperature)}°F</div><div class="w-desc">${info.d}</div></div>
+                <span class="court-status ${good ? 'court-good' : 'court-bad'}">${good ? '✅ Good for Tennis' : '⚠️ Check Conditions'}</span>
+            </div>
+            <div class="weather-meta">
+                <span><i class="fas fa-wind"></i> ${Math.round(cw.windspeed)} mph</span>
+                <span><i class="fas fa-compass"></i> ${cw.winddirection}° wind dir</span>
+            </div>`;
+    } catch {
+        el.innerHTML = '<div class="weather-loading">⚠️ Weather unavailable — please check manually.</div>';
+    }
+}
+
+/* ── BOOKING FORM ── */
+function fmtTime(t) {
+    const [h,m] = t.split(':').map(Number);
+    return `${h%12||12}:${String(m).padStart(2,'0')} ${h>=12?'PM':'AM'}`;
+}
+
+function refreshSlots() {
+    const loc    = document.getElementById('locPref').value;
+    const sel    = document.getElementById('slotIn');
+    const notice = document.getElementById('noSlotsNotice');
+    sel.innerHTML = '<option value="">— Select a date &amp; time —</option>';
+    if(!loc) return;
+    const filtered = getSlots().filter(s =>
+        loc === 'flexible' || s.loc === loc || s.loc === 'both'
+    ).sort((a,b) => new Date(a.date+'T'+a.time) - new Date(b.date+'T'+b.time));
+    if(!filtered.length) { notice.style.display = 'block'; return; }
+    notice.style.display = 'none';
+    const lNames = {hickory:'Hickory Ridge',northwest:'NW Cabarrus',both:'Both Locations'};
+    filtered.forEach(s => {
+        const o = document.createElement('option');
+        o.value = s.id;
+        o.textContent = `${s.date}  ·  ${fmtTime(s.time)}  ·  ${lNames[s.loc]||s.loc}  (${s.dur})`;
+        sel.appendChild(o);
+    });
+}
+
+function handleBookingSubmit(e) {
+    e.preventDefault();
+    const slotEl = document.getElementById('slotIn');
+    const b = {
+        id: Date.now(),
+        firstName: document.getElementById('fName').value.trim(),
+        lastName:  document.getElementById('lName').value.trim(),
+        email:     document.getElementById('emailIn').value.trim(),
+        phone:     document.getElementById('phoneIn').value.trim(),
+        age:       document.getElementById('ageIn').value,
+        level:     document.getElementById('levelIn').value,
+        location:  document.getElementById('locPref').value,
+        group:     document.getElementById('groupIn').value,
+        slotId:    slotEl.value,
+        slotText:  slotEl.options[slotEl.selectedIndex]?.text || 'N/A',
+        notes:     document.getElementById('notesIn').value.trim(),
+        status:    'pending',
+        ts:        new Date().toLocaleString()
+    };
+    const bks = getBookings(); bks.push(b); saveBookings(bks);
+    document.getElementById('bookingForm').style.display = 'none';
+    const sc = document.getElementById('successCard');
+    sc.style.display = 'block';
+    sc.scrollIntoView({behavior:'smooth'});
+}
+
+/* ── QR CODE ── */
+function buildQR() {
+    const box = document.getElementById('flyer-qr-box');
+    box.innerHTML = '';
+    try {
+        new QRCode(box, {
+            text: SITE_URL || 'https://aceforwardtennis.com',
+            width:75, height:75, colorDark:'#0d3b2e', colorLight:'#ffffff',
+            correctLevel: QRCode.CorrectLevel.M
+        });
+    } catch {
+        box.innerHTML = `<div style="width:75px;height:75px;background:#0d3b2e;border-radius:6px;
+            display:flex;align-items:center;justify-content:center;color:white;
+            font-size:0.6rem;text-align:center;padding:4px;font-weight:700;">SCAN<br>TO<br>BOOK</div>`;
+    }
+}
+
+/* ── PRINT FLYER ── */
+function printFlyer() {
+    const url = SITE_URL || 'https://aceforwardtennis.com';
+    const w   = window.open('', '_blank', 'width=620,height=900');
+    w.document.write(`<!DOCTYPE html><html><head>
+<meta charset="UTF-8"><title>Ace Forward — Flyer</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+body{font-family:'Open Sans',sans-serif;background:#f0f4f0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem;}
+h1,h2,h3,h4{font-family:'Montserrat',sans-serif;}
+.fc{background:linear-gradient(160deg,#0d3b2e 0%,#1a6040 60%,#226645 100%);border-radius:20px;padding:2.5rem 2rem;color:white;text-align:center;max-width:460px;width:100%;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(13,59,46,0.5);}
+.fi{position:relative;z-index:1;}
+.emoji{font-size:2.8rem;}
+.title{font-size:1.8rem;font-weight:800;line-height:1.1;margin:.2rem 0;}
+.title span{color:#d4ed17;}
+.sub{color:rgba(255,255,255,0.65);font-size:.82rem;letter-spacing:1px;margin-bottom:1.2rem;}
+.div{width:45px;height:3px;background:#d4ed17;margin:.5rem auto 1.2rem;border-radius:2px;}
+.blk{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:1rem;margin-bottom:.8rem;}
+.btl{color:#d4ed17;font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:.6rem;}
+.free{display:inline-block;background:#d4ed17;color:#0d3b2e;font-weight:800;font-size:.9rem;padding:.35rem 1rem;border-radius:25px;margin-bottom:.3rem;}
+.fsub{font-size:.74rem;color:rgba(255,255,255,.6);}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;}
+.pb{background:rgba(255,255,255,.09);border-radius:7px;padding:.6rem .3rem;}
+.pv{font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:800;color:#d4ed17;}
+.pl{font-size:.65rem;color:rgba(255,255,255,.65);margin-top:.15rem;line-height:1.3;}
+.locs{font-size:.8rem;color:rgba(255,255,255,.75);line-height:1.9;}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;}
+.cb{background:rgba(255,255,255,.08);border-radius:7px;padding:.6rem;}
+.cn{font-size:.78rem;font-weight:700;color:#d4ed17;}
+.cp{font-size:.8rem;color:rgba(255,255,255,.85);margin-top:.1rem;}
+.qrow{display:flex;align-items:center;gap:1rem;background:white;border-radius:10px;padding:.8rem 1rem;margin-top:.8rem;}
+.ql{text-align:left;} .ql h4{color:#0d3b2e;font-size:.82rem;margin-bottom:.2rem;}
+.ql p{color:#6b7280;font-size:.7rem;line-height:1.4;} .ql small{color:#aaa;font-size:.64rem;font-style:italic;}
+#pqr canvas,#pqr img{width:68px!important;height:68px!important;}
+</style></head><body>
+<div class="fc"><div class="fi">
+<div class="emoji">🎾</div>
+<div class="title">Ace Forward<br><span>Tennis Academy</span></div>
+<p class="sub">Where Beginners Become Champions</p>
+<div class="div"></div>
+<div class="blk"><div class="btl">✨ New Student Special</div><div class="free">🎉 First Hour is FREE!</div><p class="fsub">No commitment required. Just show up and play.</p></div>
+<div class="blk"><div class="btl">💰 Session Rates (Per Hour)</div>
+<div class="pgrid">
+<div class="pb"><div class="pv">$25</div><div class="pl">1-on-1 Individual</div></div>
+<div class="pb"><div class="pv">$15</div><div class="pl">Small Group (2–3)</div></div>
+<div class="pb"><div class="pv">$10</div><div class="pl">Group (4–6 Players)</div></div>
+</div></div>
+<div class="blk"><div class="btl">📍 Court Locations</div><div class="locs">🏫 Hickory Ridge High School — Concord, NC<br>🏫 Northwest Cabarrus High School — Harrisburg, NC</div></div>
+<div class="blk"><div class="btl">📞 Contact Our Coaches</div>
+<div class="cgrid">
+<div class="cb"><div class="cn">Akhil Sathish</div><div class="cp">(704) 322-8669</div></div>
+<div class="cb"><div class="cn">Rudra Shah</div><div class="cp">(704) 388-1244</div></div>
+</div></div>
+<div class="qrow"><div id="pqr"></div><div class="ql"><h4>📲 Scan to Book Online</h4><p>Visit our site to check availability and sign up for your FREE trial session!</p><small>aceforwardtennis.com</small></div></div>
+</div></div>
+<script>window.onload=function(){try{new QRCode(document.getElementById('pqr'),{text:"${url}",width:68,height:68,colorDark:"#0d3b2e",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M});}catch(e){}setTimeout(function(){window.print();},900);};<\/script>
+</body></html>`);
+    w.document.close();
+}
+
+/* ── ADMIN ── */
+function openAdmin() {
+    document.getElementById('adminModal').classList.add('open');
+    if(loggedIn) showDashboard();
+}
+function closeAdmin() { document.getElementById('adminModal').classList.remove('open'); }
+document.getElementById('adminModal').addEventListener('click', e => { if(e.target.id==='adminModal') closeAdmin(); });
+
+function doLogin() {
+    const p = document.getElementById('adminPwd').value;
+    if(p === getPass()) { loggedIn = true; showDashboard(); document.getElementById('adminPwd').value = ''; }
+    else { alert('❌ Incorrect password. Please try again.'); document.getElementById('adminPwd').value = ''; }
+}
+function doLogout() {
+    loggedIn = false;
+    document.getElementById('adminContent').style.display = 'none';
+    document.getElementById('adminLoginScreen').style.display = 'block';
+    closeAdmin();
+}
+function showDashboard() {
+    document.getElementById('adminLoginScreen').style.display = 'none';
+    document.getElementById('adminContent').style.display = 'block';
+    document.getElementById('newSlotDate').min = new Date().toISOString().split('T')[0];
+    renderSlots(); renderBookings();
+}
+function switchTab(btn, id) {
+    document.querySelectorAll('.a-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.a-tab-content').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('admin-tab-'+id).classList.add('active');
+    if(id==='bookings') renderBookings();
+    if(id==='slots') renderSlots();
+}
+
+/* SLOTS */
+function addSlot() {
+    const loc  = document.getElementById('newSlotLoc').value;
+    const date = document.getElementById('newSlotDate').value;
+    const time = document.getElementById('newSlotTime').value;
+    const dur  = document.getElementById('newSlotDur').value;
+    if(!date||!time){ alert('Please enter both a date and start time.'); return; }
+    const slots = getSlots();
+    slots.push({id:Date.now(),loc,date,time,dur});
+    saveSlots(slots); renderSlots();
+    document.getElementById('newSlotDate').value = '';
+    document.getElementById('newSlotTime').value = '';
+}
+function deleteSlot(id) {
+    if(!confirm('Delete this slot?')) return;
+    saveSlots(getSlots().filter(s => s.id !== id)); renderSlots();
+}
+function renderSlots() {
+    const ul = document.getElementById('slotsUl');
+    const slots = getSlots().sort((a,b) => new Date(a.date+'T'+a.time)-new Date(b.date+'T'+b.time));
+    const ln = {hickory:'📍 Hickory Ridge',northwest:'📍 NW Cabarrus',both:'📍 Both Locations'};
+    if(!slots.length){ ul.innerHTML='<li style="color:var(--gray);font-size:.88rem;padding:.5rem 0;">No slots yet — add one above.</li>'; return; }
+    ul.innerHTML = slots.map(s=>`
+        <li class="slot-li">
+            <div><div class="sl-info">📅 ${s.date} &nbsp;·&nbsp; ${fmtTime(s.time)} &nbsp;·&nbsp; ${s.dur}</div><div class="sl-meta">${ln[s.loc]||s.loc}</div></div>
+            <button class="btn-del-slot" onclick="deleteSlot(${s.id})">Delete</button>
+        </li>`).join('');
+}
+
+/* BOOKINGS */
+function confirmBooking(id) { saveBookings(getBookings().map(b=>b.id===id?{...b,status:'confirmed'}:b)); renderBookings(); }
+function deleteBooking(id)  { if(!confirm('Delete this booking?')) return; saveBookings(getBookings().filter(b=>b.id!==id)); renderBookings(); }
+function clearAllBookings() { if(!confirm('Delete ALL bookings? This cannot be undone.')) return; saveBookings([]); renderBookings(); }
+
+function renderBookings() {
+    const cont = document.getElementById('bookingsAdmin');
+    const bks  = getBookings().slice().reverse();
+    const lm  = {hickory:'Hickory Ridge (Concord)',northwest:'NW Cabarrus (Harrisburg)',flexible:'Flexible'};
+    const lvl = {beginner:'Beginner',some:'Some Experience',intermediate:'Intermediate',advanced:'Advanced/Competitive'};
+    const grp = {'1':'Individual','2-3':'2–3 Players','4-6':'4–6 Players'};
+    if(!bks.length){ cont.innerHTML='<p style="color:var(--gray);font-size:.88rem;">No bookings yet.</p>'; return; }
+    cont.innerHTML = bks.map(b=>`
+        <div class="booking-admin-item">
+            <div class="bai-hdr">
+                <h4>${b.firstName} ${b.lastName}</h4>
+                <span class="status-badge ${b.status==='confirmed'?'s-confirmed':'s-pending'}">${b.status}</span>
+            </div>
+            <div class="bai-details">
+                📧 ${b.email} &nbsp;|&nbsp; 📞 ${b.phone}${b.age?` &nbsp;|&nbsp; Age: ${b.age}`:''}<br>
+                📅 ${b.slotText||'N/A'}<br>
+                📍 ${lm[b.location]||b.location} &nbsp;|&nbsp; 👥 ${grp[b.group]||b.group} &nbsp;|&nbsp; 🎾 ${lvl[b.level]||b.level}<br>
+                ${b.notes?`📝 <em>${b.notes}</em><br>`:''}
+                ⏰ Submitted: ${b.ts}
+            </div>
+            <div class="bai-actions">
+                <button class="btn-confirm-bk" onclick="confirmBooking(${b.id})">${b.status==='confirmed'?'✅ Confirmed':'Mark Confirmed'}</button>
+                <button class="btn-del-bk" onclick="deleteBooking(${b.id})">Delete</button>
+            </div>
+        </div>`).join('');
+}
+
+/* PASSWORD */
+function changePass() {
+    const cur = document.getElementById('curPwd').value;
+    const nw  = document.getElementById('newPwd').value;
+    const cnf = document.getElementById('confirmPwd').value;
+    const msg = document.getElementById('pwdMsg');
+    if(cur !== getPass())  { msg.className='pass-msg pass-err'; msg.textContent='❌ Current password is incorrect.'; return; }
+    if(nw  !== cnf)        { msg.className='pass-msg pass-err'; msg.textContent='❌ New passwords do not match.'; return; }
+    if(nw.length < 6)      { msg.className='pass-msg pass-err'; msg.textContent='❌ Password must be at least 6 characters.'; return; }
+    savePass(nw);
+    msg.className='pass-msg pass-ok'; msg.textContent='✅ Password updated successfully!';
+    ['curPwd','newPwd','confirmPwd'].forEach(id => document.getElementById(id).value='');
+}
+
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded', () => {
+    loadWeather('concord');
+    loadWeather('harrisburg');
+    buildQR();
+    refreshSlots();
+});
+</script>
+</body>
+</html>
